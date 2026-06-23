@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nikhil | God Mode Portfolio</title>
+<title>Nikhil | Final Boss Portfolio</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
@@ -16,12 +16,23 @@
 }
 
 body {
-    background: #050814;
+    background: #050818;
     color: white;
     overflow-x: hidden;
 }
 
-/* ⭐ STAR BACKGROUND */
+/* SCROLL BAR */
+#progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: #00ffd5;
+    width: 0%;
+    z-index: 2000;
+}
+
+/* PARTICLES */
 canvas {
     position: fixed;
     top: 0;
@@ -86,13 +97,31 @@ nav a:hover {
     margin-top: 10px;
 }
 
-/* BUTTONS */
+/* TYPING */
+.typing {
+    color: #00ffd5;
+    border-right: 2px solid #00ffd5;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: typing 4s steps(40) infinite, blink 0.8s infinite;
+}
+
+@keyframes typing {
+    0% { width: 0 }
+    50% { width: 100% }
+    100% { width: 0 }
+}
+
+@keyframes blink {
+    50% { border-color: transparent; }
+}
+
+/* BUTTON */
 .btn {
     margin-top: 20px;
     padding: 12px 25px;
-    border: none;
     background: #00ffd5;
-    color: black;
+    border: none;
     border-radius: 30px;
     font-weight: bold;
     cursor: pointer;
@@ -108,9 +137,17 @@ section {
     padding: 90px 20px;
     max-width: 1000px;
     margin: auto;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: 0.8s ease;
 }
 
-/* 3D CARDS */
+section.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* CARDS */
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -122,26 +159,12 @@ section {
     padding: 20px;
     border-radius: 15px;
     transition: 0.3s;
-    transform-style: preserve-3d;
+    cursor: pointer;
 }
 
 .card:hover {
-    transform: perspective(1000px) rotateY(10deg) rotateX(10deg);
-    box-shadow: 0 10px 30px rgba(0,255,213,0.3);
-}
-
-/* SKILLS */
-.skills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.skills span {
-    padding: 8px 15px;
-    background: #00ffd5;
-    color: black;
-    border-radius: 20px;
+    transform: translateY(-8px);
+    box-shadow: 0 0 25px rgba(0,255,213,0.2);
 }
 
 /* FLOAT BUTTON */
@@ -174,7 +197,6 @@ section {
     background: #111;
     padding: 20px;
     border-radius: 10px;
-    max-width: 400px;
 }
 
 /* FOOTER */
@@ -188,7 +210,8 @@ footer {
 
 <body>
 
-<canvas id="stars"></canvas>
+<div id="progress"></div>
+<canvas id="particles"></canvas>
 
 <nav>
     <h3>Nikhil.dev</h3>
@@ -208,26 +231,24 @@ footer {
     </div>
 
     <h1>Hello, I'm Nikhil</h1>
+    <p class="typing">Student • Developer • Creator</p>
 
-    <button class="btn" onclick="downloadResume()">Download Resume</button>
+    <button class="btn">Download Resume</button>
 </div>
 
 <!-- ABOUT -->
 <section id="about">
     <h2>About Me</h2>
     <div class="card">
-        I am a learner building modern web experiences with animations and clean UI.
+        I am a passionate learner building modern web experiences with animations and interactive UI.
     </div>
 </section>
 
 <!-- SKILLS -->
 <section id="skills">
     <h2>Skills</h2>
-    <div class="card skills">
-        <span>HTML</span>
-        <span>CSS</span>
-        <span>Java</span>
-        <span>JSP</span>
+    <div class="card">
+        HTML • CSS • Java • JSP • JavaScript
     </div>
 </section>
 
@@ -246,7 +267,7 @@ footer {
         </div>
 
         <div class="card">
-            Coming Soon 🚀
+            More Coming Soon 🚀
         </div>
 
     </div>
@@ -260,47 +281,34 @@ footer {
     </div>
 </div>
 
-<!-- FLOAT BUTTON -->
-<div class="float-btn" onclick="alert('Contact coming soon!')">
+<!-- FLOAT -->
+<div class="float-btn" onclick="alert('Contact feature coming soon!')">
     Hire Me
 </div>
 
 <footer>
-    © 2026 Nikhil | God Mode Portfolio ✨
+    © 2026 Nikhil | Final Boss Portfolio ✨
 </footer>
 
 <script>
 
-/* STAR BACKGROUND */
-const canvas = document.getElementById("stars");
-const ctx = canvas.getContext("2d");
+/* SCROLL ANIMATION */
+const sections = document.querySelectorAll("section");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+window.addEventListener("scroll", () => {
 
-let stars = [];
+    let scrollTop = window.scrollY;
+    let docHeight = document.body.scrollHeight - window.innerHeight;
+    let progress = (scrollTop / docHeight) * 100;
 
-for (let i = 0; i < 100; i++) {
-    stars.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: Math.random() * 2
+    document.getElementById("progress").style.width = progress + "%";
+
+    sections.forEach(sec => {
+        if (scrollTop > sec.offsetTop - 500) {
+            sec.classList.add("show");
+        }
     });
-}
-
-function drawStars() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "white";
-
-    for (let s of stars) {
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fill();
-    }
-
-    requestAnimationFrame(drawStars);
-}
-drawStars();
+});
 
 /* MODAL */
 function openModal(text) {
@@ -312,11 +320,47 @@ function closeModal() {
     document.getElementById("modal").style.display = "none";
 }
 
-/* RESUME */
-function downloadResume() {
-    alert("Add your resume file link here!");
+/* PARTICLES */
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+for (let i = 0; i < 80; i++) {
+    particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 2,
+        dx: Math.random() - 0.5,
+        dy: Math.random() - 0.5
+    });
 }
+
+function animate() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    ctx.fillStyle = "#00ffd5";
+
+    particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fill();
+
+        p.x += p.dx;
+        p.y += p.dy;
+
+        if(p.x < 0 || p.x > canvas.width) p.dx *= -1;
+        if(p.y < 0 || p.y > canvas.height) p.dy *= -1;
+    });
+
+    requestAnimationFrame(animate);
+}
+animate();
+
 </script>
 
 </body>
-    </html>
+            </html>                
