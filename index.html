@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nikhil | Elite Portfolio</title>
+<title>Nikhil | God Mode Portfolio</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
@@ -13,28 +13,25 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
-    scroll-behavior: smooth;
 }
 
 body {
-    background: #0a0f1f;
+    background: #050814;
     color: white;
     overflow-x: hidden;
 }
 
-/* PARTICLES */
-#particles {
+/* ⭐ STAR BACKGROUND */
+canvas {
     position: fixed;
-    width: 100%;
-    height: 100%;
+    top: 0;
+    left: 0;
     z-index: -1;
-    background: radial-gradient(circle at top, #0f2027, #000);
 }
 
 /* NAV */
 nav {
     position: fixed;
-    top: 0;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -53,11 +50,9 @@ nav ul {
 nav a {
     color: white;
     text-decoration: none;
-    transition: 0.3s;
 }
 
-nav a:hover,
-nav a.active {
+nav a:hover {
     color: #00ffd5;
 }
 
@@ -78,12 +73,6 @@ nav a.active {
     overflow: hidden;
     border: 4px solid #00ffd5;
     box-shadow: 0 0 40px rgba(0,255,213,0.4);
-    margin-bottom: 15px;
-    transition: 0.3s;
-}
-
-.profile:hover {
-    transform: scale(1.05);
 }
 
 .profile img {
@@ -93,34 +82,18 @@ nav a.active {
 }
 
 .hero h1 {
-    font-size: 48px;
+    font-size: 50px;
+    margin-top: 10px;
 }
 
-.typing {
-    color: #00ffd5;
-    border-right: 2px solid #00ffd5;
-    white-space: nowrap;
-    overflow: hidden;
-    animation: typing 4s steps(40) infinite, blink 0.8s infinite;
-}
-
-@keyframes typing {
-    0% { width: 0 }
-    50% { width: 100% }
-    100% { width: 0 }
-}
-
-@keyframes blink {
-    50% { border-color: transparent; }
-}
-
-/* BUTTON */
+/* BUTTONS */
 .btn {
     margin-top: 20px;
     padding: 12px 25px;
-    background: #00ffd5;
     border: none;
-    border-radius: 25px;
+    background: #00ffd5;
+    color: black;
+    border-radius: 30px;
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
@@ -135,45 +108,40 @@ section {
     padding: 90px 20px;
     max-width: 1000px;
     margin: auto;
-    opacity: 0;
-    transform: translateY(40px);
-    transition: 0.8s ease;
 }
 
-section.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.card {
-    background: rgba(255,255,255,0.08);
-    padding: 20px;
-    border-radius: 15px;
-    margin: 15px 0;
-    backdrop-filter: blur(10px);
-    transition: 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-8px);
-}
-
-/* PROJECT GRID */
+/* 3D CARDS */
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
 }
 
-.project {
+.card {
     background: rgba(255,255,255,0.08);
     padding: 20px;
     border-radius: 15px;
     transition: 0.3s;
+    transform-style: preserve-3d;
 }
 
-.project:hover {
-    transform: scale(1.05);
+.card:hover {
+    transform: perspective(1000px) rotateY(10deg) rotateX(10deg);
+    box-shadow: 0 10px 30px rgba(0,255,213,0.3);
+}
+
+/* SKILLS */
+.skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.skills span {
+    padding: 8px 15px;
+    background: #00ffd5;
+    color: black;
+    border-radius: 20px;
 }
 
 /* FLOAT BUTTON */
@@ -185,9 +153,28 @@ section.show {
     color: black;
     padding: 15px 20px;
     border-radius: 50px;
-    font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 0 20px rgba(0,255,213,0.6);
+    font-weight: bold;
+}
+
+/* MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #111;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
 }
 
 /* FOOTER */
@@ -201,16 +188,15 @@ footer {
 
 <body>
 
-<div id="particles"></div>
+<canvas id="stars"></canvas>
 
 <nav>
     <h3>Nikhil.dev</h3>
     <ul>
-        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#home">Home</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
     </ul>
 </nav>
 
@@ -222,86 +208,114 @@ footer {
     </div>
 
     <h1>Hello, I'm Nikhil</h1>
-    <p class="typing">Student • Developer • Creator</p>
 
-    <button class="btn" onclick="document.getElementById('about').scrollIntoView()">
-        Explore
-    </button>
+    <button class="btn" onclick="downloadResume()">Download Resume</button>
 </div>
 
 <!-- ABOUT -->
 <section id="about">
     <h2>About Me</h2>
     <div class="card">
-        I am learning web development and building modern interactive websites with clean UI and animations.
+        I am a learner building modern web experiences with animations and clean UI.
     </div>
 </section>
 
 <!-- SKILLS -->
 <section id="skills">
     <h2>Skills</h2>
-    <div class="card">
-        HTML • CSS • Java • JSP • JavaScript (Learning)
+    <div class="card skills">
+        <span>HTML</span>
+        <span>CSS</span>
+        <span>Java</span>
+        <span>JSP</span>
     </div>
 </section>
 
 <!-- PROJECTS -->
 <section id="projects">
     <h2>Projects</h2>
+
     <div class="grid">
 
-        <div class="project">
-            <h3>Portfolio Website</h3>
-            <p>Modern responsive personal website.</p>
+        <div class="card" onclick="openModal('Portfolio Website')">
+            Portfolio Website
         </div>
 
-        <div class="project">
-            <h3>Calculator</h3>
-            <p>Simple JavaScript calculator.</p>
+        <div class="card" onclick="openModal('Calculator App')">
+            Calculator App
         </div>
 
-        <div class="project">
-            <h3>More Coming</h3>
-            <p>Future advanced projects 🚀</p>
+        <div class="card">
+            Coming Soon 🚀
         </div>
 
     </div>
 </section>
 
-<!-- CONTACT -->
-<section id="contact">
-    <h2>Contact</h2>
-    <div class="card">
-        <input type="text" placeholder="Name"><br><br>
-        <input type="email" placeholder="Email"><br><br>
-        <textarea placeholder="Message"></textarea><br><br>
-        <button class="btn">Send</button>
+<!-- MODAL -->
+<div class="modal" id="modal">
+    <div class="modal-content">
+        <h3 id="modalText"></h3>
+        <button class="btn" onclick="closeModal()">Close</button>
     </div>
-</section>
-
-<footer>
-    © 2026 Nikhil Portfolio | Elite Version ✨
-</footer>
+</div>
 
 <!-- FLOAT BUTTON -->
-<div class="float-btn" onclick="alert('Contact feature coming soon!')">
+<div class="float-btn" onclick="alert('Contact coming soon!')">
     Hire Me
 </div>
 
+<footer>
+    © 2026 Nikhil | God Mode Portfolio ✨
+</footer>
+
 <script>
-/* SCROLL ANIMATION */
-const sections = document.querySelectorAll("section");
 
-window.addEventListener("scroll", () => {
-    sections.forEach(sec => {
-        const top = window.scrollY;
-        const offset = sec.offsetTop - 500;
+/* STAR BACKGROUND */
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
 
-        if (top > offset) {
-            sec.classList.add("show");
-        }
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let stars = [];
+
+for (let i = 0; i < 100; i++) {
+    stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 2
     });
-});
+}
+
+function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "white";
+
+    for (let s of stars) {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    requestAnimationFrame(drawStars);
+}
+drawStars();
+
+/* MODAL */
+function openModal(text) {
+    document.getElementById("modal").style.display = "flex";
+    document.getElementById("modalText").innerText = text;
+}
+
+function closeModal() {
+    document.getElementById("modal").style.display = "none";
+}
+
+/* RESUME */
+function downloadResume() {
+    alert("Add your resume file link here!");
+}
 </script>
 
 </body>
