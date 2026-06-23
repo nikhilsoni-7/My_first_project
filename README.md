@@ -16,3 +16,6 @@ Skills:
 - SQL
 - Assembly
 - Javascript
+## Update 1
+
+Today I created my first GitHub repository and made my first commit.
