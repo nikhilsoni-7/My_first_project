@@ -211,16 +211,35 @@ footer {
 
 <canvas id="bg"></canvas>
 
-<nav>
-    <h3>Nikhil.dev</h3>
-    <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
-    </ul>
-</nav>
+nav {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 60px; /* more breathing space */
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+}
+
+/* LEFT LOGO */
+nav h3 {
+    margin-left: 15px;  /* pushes slightly away from edge */
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* RIGHT MENU */
+nav ul {
+    display: flex;
+    gap: 25px;
+    list-style: none;
+    margin-right: 10px;
+}
+ 
 
 <!-- HERO -->
 <div class="hero" id="home">
