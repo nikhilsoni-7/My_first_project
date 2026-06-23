@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nikhil | Developer System</title>
+<title>Nikhil | Developer Portfolio</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
@@ -29,26 +29,29 @@ canvas {
     z-index: -1;
 }
 
-/* NAV */
+/* NAVBAR */
 nav {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 50px;
+    padding: 15px 40px;
     background: rgba(0,0,0,0.4);
     backdrop-filter: blur(10px);
     z-index: 1000;
 }
 
 nav h3 {
-    margin-left: 10px;
+    font-size: 18px;
+    padding-left: 10px;
 }
 
 nav ul {
     display: flex;
-    gap: 25px;
+    gap: 22px;
     list-style: none;
 }
 
@@ -70,8 +73,8 @@ nav a:hover {
     text-align: center;
 }
 
-.hero-content {
-    transition: 0.2s;
+.hero-box {
+    transition: transform 0.2s ease;
 }
 
 .profile {
@@ -136,7 +139,7 @@ section {
     margin: auto;
     opacity: 0;
     transform: translateY(40px);
-    transition: 0.8s;
+    transition: 0.8s ease;
 }
 
 section.show {
@@ -144,7 +147,7 @@ section.show {
     transform: translateY(0);
 }
 
-/* GRID CARDS */
+/* CARDS */
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -156,7 +159,6 @@ section.show {
     padding: 20px;
     border-radius: 15px;
     transition: 0.3s;
-    cursor: pointer;
 }
 
 .card:hover {
@@ -211,54 +213,24 @@ footer {
 
 <canvas id="bg"></canvas>
 
-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 15px 30px; /* balanced padding */
-    background: rgba(0,0,0,0.4);
-    backdrop-filter: blur(10px);
-    z-index: 1000;
-}
-
-/* LEFT LOGO */
-nav h3 {
-    margin: 0;
-    padding-left: 10px;  /* small safe shift */
-    font-size: 18px;
-    white-space: nowrap;
-}
-
-/* RIGHT MENU */
-nav ul {
-    display: flex;
-    gap: 20px;
-    list-style: none;
-    margin: 0;
-    padding-right: 10px;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-nav a:hover {
-    color: #00ffd5;
-}
+<!-- NAV -->
+<nav>
+    <h3>Nikhil.dev</h3>
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
 
 <!-- HERO -->
 <div class="hero" id="home">
-    <div class="hero-content" id="heroBox">
+    <div class="hero-box" id="heroBox">
 
         <div class="profile">
-            <img src="profile.jpg" alt="My Photo">
+            <img src="profile.jpg" alt="Profile">
         </div>
 
         <h1>Hello, I'm Nikhil</h1>
@@ -271,8 +243,7 @@ nav a:hover {
 <!-- ABOUT -->
 <section id="about">
     <h2>About Me</h2>
-    <div class="card">I am building modern web experiences and learning full-stack development.</div>
-
+    <div class="card">I am learning web development and building interactive websites.</div>
     <div class="card" id="stats">Loading GitHub stats...</div>
 </section>
 
@@ -292,7 +263,7 @@ nav a:hover {
 <section id="blog">
     <h2>Blog</h2>
     <div class="card">
-        My journey of learning web development starts here 🚀
+        My journey in web development 🚀
     </div>
 </section>
 
@@ -320,7 +291,7 @@ Hire Me
 </div>
 
 <footer>
-    © 2026 Nikhil | Industry Level Portfolio
+    © 2026 Nikhil Portfolio
 </footer>
 
 <script>
@@ -328,42 +299,56 @@ Hire Me
 /* PARTICLES */
 const canvas=document.getElementById("bg");
 const ctx=canvas.getContext("2d");
+
 canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
 
 let p=[];
-for(let i=0;i<70;i++){
-p.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,dx:(Math.random()-0.5),dy:(Math.random()-0.5)});
+for(let i=0;i<80;i++){
+p.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+dx:(Math.random()-0.5),
+dy:(Math.random()-0.5)
+});
 }
 
 function animate(){
 ctx.clearRect(0,0,canvas.width,canvas.height);
 ctx.fillStyle="#00ffd5";
+
 p.forEach(a=>{
 ctx.beginPath();
 ctx.arc(a.x,a.y,1.5,0,Math.PI*2);
 ctx.fill();
-a.x+=a.dx;a.y+=a.dy;
+
+a.x+=a.dx;
+a.y+=a.dy;
+
 if(a.x<0||a.x>canvas.width)a.dx*=-1;
 if(a.y<0||a.y>canvas.height)a.dy*=-1;
 });
+
 requestAnimationFrame(animate);
 }
 animate();
 
-/* SCROLL */
+/* SCROLL ANIMATION */
 const sections=document.querySelectorAll("section");
 window.addEventListener("scroll",()=>{
 sections.forEach(s=>{
-if(window.scrollY>s.offsetTop-500)s.classList.add("show");
+if(window.scrollY>s.offsetTop-500){
+s.classList.add("show");
+}
 });
 });
 
-/* HERO 3D */
+/* 3D HERO */
 document.addEventListener("mousemove",(e)=>{
 let x=(window.innerWidth/2-e.pageX)/30;
 let y=(window.innerHeight/2-e.pageY)/30;
-document.getElementById("heroBox").style.transform=`rotateY(${x}deg) rotateX(${y}deg)`;
+document.getElementById("heroBox").style.transform=
+`rotateY(${x}deg) rotateX(${y}deg)`;
 });
 
 /* GITHUB REPOS */
@@ -397,9 +382,13 @@ document.getElementById("input").addEventListener("keypress",(e)=>{
 if(e.key==="Enter"){
 let msg=e.target.value;
 let reply="AI ready 🤖";
-if(msg.includes("skills"))reply="HTML CSS Java JSP";
-if(msg.includes("project"))reply="Scroll above!";
-document.getElementById("chatlog").innerHTML+=`<p>${msg} → ${reply}</p>`;
+
+if(msg.includes("skills")) reply="HTML CSS Java JSP";
+if(msg.includes("project")) reply="Scroll above!";
+
+document.getElementById("chatlog").innerHTML+=
+`<p>${msg} → ${reply}</p>`;
+
 e.target.value="";
 }
 });
@@ -412,4 +401,4 @@ window.open("resume.pdf","_blank");
 </script>
 
 </body>
-    </html>
+            </html>
