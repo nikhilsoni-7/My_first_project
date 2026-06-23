@@ -1,9 +1,9 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nikhil | Final Boss Portfolio</title>
+<title>Nikhil | Developer System</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
@@ -21,18 +21,7 @@ body {
     overflow-x: hidden;
 }
 
-/* SCROLL BAR */
-#progress {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 4px;
-    background: #00ffd5;
-    width: 0%;
-    z-index: 2000;
-}
-
-/* PARTICLES */
+/* BACKGROUND */
 canvas {
     position: fixed;
     top: 0;
@@ -46,15 +35,20 @@ nav {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    padding: 15px 30px;
+    align-items: center;
+    padding: 15px 50px;
     background: rgba(0,0,0,0.4);
     backdrop-filter: blur(10px);
     z-index: 1000;
 }
 
+nav h3 {
+    margin-left: 10px;
+}
+
 nav ul {
     display: flex;
-    gap: 20px;
+    gap: 25px;
     list-style: none;
 }
 
@@ -71,10 +65,13 @@ nav a:hover {
 .hero {
     height: 100vh;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
+}
+
+.hero-content {
+    transition: 0.2s;
 }
 
 .profile {
@@ -83,6 +80,7 @@ nav a:hover {
     border-radius: 50%;
     overflow: hidden;
     border: 4px solid #00ffd5;
+    margin: auto;
     box-shadow: 0 0 40px rgba(0,255,213,0.4);
 }
 
@@ -92,12 +90,11 @@ nav a:hover {
     object-fit: cover;
 }
 
-.hero h1 {
-    font-size: 50px;
-    margin-top: 10px;
+h1 {
+    margin-top: 15px;
+    font-size: 45px;
 }
 
-/* TYPING */
 .typing {
     color: #00ffd5;
     border-right: 2px solid #00ffd5;
@@ -123,8 +120,8 @@ nav a:hover {
     background: #00ffd5;
     border: none;
     border-radius: 30px;
-    font-weight: bold;
     cursor: pointer;
+    font-weight: bold;
     transition: 0.3s;
 }
 
@@ -139,7 +136,7 @@ section {
     margin: auto;
     opacity: 0;
     transform: translateY(40px);
-    transition: 0.8s ease;
+    transition: 0.8s;
 }
 
 section.show {
@@ -147,7 +144,7 @@ section.show {
     transform: translateY(0);
 }
 
-/* CARDS */
+/* GRID CARDS */
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -163,8 +160,8 @@ section.show {
 }
 
 .card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 0 25px rgba(0,255,213,0.2);
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0,255,213,0.2);
 }
 
 /* FLOAT BUTTON */
@@ -174,29 +171,31 @@ section.show {
     right: 25px;
     background: #00ffd5;
     color: black;
-    padding: 15px 20px;
+    padding: 15px;
     border-radius: 50px;
     cursor: pointer;
     font-weight: bold;
 }
 
-/* MODAL */
-.modal {
-    display: none;
+/* CHAT */
+.chat-btn {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.8);
-    justify-content: center;
-    align-items: center;
+    bottom: 90px;
+    right: 25px;
+    background: #00ffd5;
+    padding: 12px;
+    border-radius: 50%;
+    cursor: pointer;
 }
 
-.modal-content {
+.chatbox {
+    position: fixed;
+    bottom: 150px;
+    right: 25px;
+    width: 250px;
     background: #111;
-    padding: 20px;
-    border-radius: 10px;
+    padding: 10px;
+    display: none;
 }
 
 /* FOOTER */
@@ -210,8 +209,7 @@ footer {
 
 <body>
 
-<div id="progress"></div>
-<canvas id="particles"></canvas>
+<canvas id="bg"></canvas>
 
 <nav>
     <h3>Nikhil.dev</h3>
@@ -220,147 +218,167 @@ footer {
         <li><a href="#about">About</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
     </ul>
 </nav>
 
 <!-- HERO -->
 <div class="hero" id="home">
+    <div class="hero-content" id="heroBox">
 
-    <div class="profile">
-        <img src="profile.jpg" alt="My Photo">
+        <div class="profile">
+            <img src="profile.jpg" alt="My Photo">
+        </div>
+
+        <h1>Hello, I'm Nikhil</h1>
+        <p class="typing">Student • Developer • Creator</p>
+
+        <button class="btn" onclick="downloadResume()">Download Resume</button>
     </div>
-
-    <h1>Hello, I'm Nikhil</h1>
-    <p class="typing">Student • Developer • Creator</p>
-
-    <button class="btn">Download Resume</button>
 </div>
 
 <!-- ABOUT -->
 <section id="about">
     <h2>About Me</h2>
-    <div class="card">
-        I am a passionate learner building modern web experiences with animations and interactive UI.
-    </div>
+    <div class="card">I am building modern web experiences and learning full-stack development.</div>
+
+    <div class="card" id="stats">Loading GitHub stats...</div>
 </section>
 
 <!-- SKILLS -->
 <section id="skills">
     <h2>Skills</h2>
-    <div class="card">
-        HTML • CSS • Java • JSP • JavaScript
-    </div>
+    <div class="card">HTML • CSS • Java • JSP • JavaScript</div>
 </section>
 
 <!-- PROJECTS -->
 <section id="projects">
-    <h2>Projects</h2>
+    <h2>GitHub Projects</h2>
+    <div id="repoList" class="grid"></div>
+</section>
 
-    <div class="grid">
-
-        <div class="card" onclick="openModal('Portfolio Website')">
-            Portfolio Website
-        </div>
-
-        <div class="card" onclick="openModal('Calculator App')">
-            Calculator App
-        </div>
-
-        <div class="card">
-            More Coming Soon 🚀
-        </div>
-
+<!-- BLOG -->
+<section id="blog">
+    <h2>Blog</h2>
+    <div class="card">
+        My journey of learning web development starts here 🚀
     </div>
 </section>
 
-<!-- MODAL -->
-<div class="modal" id="modal">
-    <div class="modal-content">
-        <h3 id="modalText"></h3>
-        <button class="btn" onclick="closeModal()">Close</button>
+<!-- CONTACT -->
+<section id="contact">
+    <h2>Contact</h2>
+    <div class="card">
+        <input placeholder="Name"><br><br>
+        <input placeholder="Email"><br><br>
+        <textarea placeholder="Message"></textarea><br><br>
+        <button class="btn">Send</button>
     </div>
+</section>
+
+<!-- CHAT -->
+<div class="chat-btn" onclick="toggleChat()">AI</div>
+<div class="chatbox" id="chatbox">
+    <input id="input" placeholder="Ask..." style="width:100%">
+    <div id="chatlog"></div>
 </div>
 
 <!-- FLOAT -->
-<div class="float-btn" onclick="alert('Contact feature coming soon!')">
-    Hire Me
+<div class="float-btn" onclick="alert('Hire Me coming soon!')">
+Hire Me
 </div>
 
 <footer>
-    © 2026 Nikhil | Final Boss Portfolio ✨
+    © 2026 Nikhil | Industry Level Portfolio
 </footer>
 
 <script>
 
-/* SCROLL ANIMATION */
-const sections = document.querySelectorAll("section");
-
-window.addEventListener("scroll", () => {
-
-    let scrollTop = window.scrollY;
-    let docHeight = document.body.scrollHeight - window.innerHeight;
-    let progress = (scrollTop / docHeight) * 100;
-
-    document.getElementById("progress").style.width = progress + "%";
-
-    sections.forEach(sec => {
-        if (scrollTop > sec.offsetTop - 500) {
-            sec.classList.add("show");
-        }
-    });
-});
-
-/* MODAL */
-function openModal(text) {
-    document.getElementById("modal").style.display = "flex";
-    document.getElementById("modalText").innerText = text;
-}
-
-function closeModal() {
-    document.getElementById("modal").style.display = "none";
-}
-
 /* PARTICLES */
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
+const canvas=document.getElementById("bg");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let particles = [];
-
-for (let i = 0; i < 80; i++) {
-    particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: Math.random() * 2,
-        dx: Math.random() - 0.5,
-        dy: Math.random() - 0.5
-    });
+let p=[];
+for(let i=0;i<70;i++){
+p.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,dx:(Math.random()-0.5),dy:(Math.random()-0.5)});
 }
 
-function animate() {
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-
-    ctx.fillStyle = "#00ffd5";
-
-    particles.forEach(p => {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-        ctx.fill();
-
-        p.x += p.dx;
-        p.y += p.dy;
-
-        if(p.x < 0 || p.x > canvas.width) p.dx *= -1;
-        if(p.y < 0 || p.y > canvas.height) p.dy *= -1;
-    });
-
-    requestAnimationFrame(animate);
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="#00ffd5";
+p.forEach(a=>{
+ctx.beginPath();
+ctx.arc(a.x,a.y,1.5,0,Math.PI*2);
+ctx.fill();
+a.x+=a.dx;a.y+=a.dy;
+if(a.x<0||a.x>canvas.width)a.dx*=-1;
+if(a.y<0||a.y>canvas.height)a.dy*=-1;
+});
+requestAnimationFrame(animate);
 }
 animate();
+
+/* SCROLL */
+const sections=document.querySelectorAll("section");
+window.addEventListener("scroll",()=>{
+sections.forEach(s=>{
+if(window.scrollY>s.offsetTop-500)s.classList.add("show");
+});
+});
+
+/* HERO 3D */
+document.addEventListener("mousemove",(e)=>{
+let x=(window.innerWidth/2-e.pageX)/30;
+let y=(window.innerHeight/2-e.pageY)/30;
+document.getElementById("heroBox").style.transform=`rotateY(${x}deg) rotateX(${y}deg)`;
+});
+
+/* GITHUB REPOS */
+fetch("https://api.github.com/users/boogywoogy69/repos")
+.then(r=>r.json())
+.then(d=>{
+let box=document.getElementById("repoList");
+d.slice(0,6).forEach(r=>{
+let div=document.createElement("div");
+div.className="card";
+div.innerHTML=`<h3>${r.name}</h3><a style="color:#00ffd5" href="${r.html_url}" target="_blank">Open</a>`;
+box.appendChild(div);
+});
+});
+
+/* STATS */
+fetch("https://api.github.com/users/boogywoogy69")
+.then(r=>r.json())
+.then(d=>{
+document.getElementById("stats").innerHTML=
+`Repos: ${d.public_repos} | Followers: ${d.followers} | Following: ${d.following}`;
+});
+
+/* CHAT */
+function toggleChat(){
+let c=document.getElementById("chatbox");
+c.style.display=c.style.display==="block"?"none":"block";
+}
+
+document.getElementById("input").addEventListener("keypress",(e)=>{
+if(e.key==="Enter"){
+let msg=e.target.value;
+let reply="AI ready 🤖";
+if(msg.includes("skills"))reply="HTML CSS Java JSP";
+if(msg.includes("project"))reply="Scroll above!";
+document.getElementById("chatlog").innerHTML+=`<p>${msg} → ${reply}</p>`;
+e.target.value="";
+}
+});
+
+/* RESUME */
+function downloadResume(){
+window.open("resume.pdf","_blank");
+}
 
 </script>
 
 </body>
-            </html>                
+    </html>
