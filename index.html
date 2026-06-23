@@ -183,6 +183,29 @@ footer {
     transform: scale(1.08);
     box-shadow: 0 0 40px rgba(0,255,213,0.8);
         }
+        /* TYPING EFFECT */
+.typing {
+    font-size: 18px;
+    margin-top: 10px;
+    color: #00ffd5;
+    border-right: 2px solid #00ffd5;
+    width: fit-content;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: typing 4s steps(40) infinite, blink 0.8s infinite;
+}
+
+/* typing animation */
+@keyframes typing {
+    0% { width: 0 }
+    50% { width: 100% }
+    100% { width: 0 }
+}
+
+/* cursor blink */
+@keyframes blink {
+    50% { border-color: transparent; }
+        }
 </style>
 </head>
 
@@ -209,7 +232,8 @@ footer {
     </div>
 
     <h1>Hello, I'm Nikhil</h1>
-    <p>A learner building modern web experiences 🚀</p>
+
+    <p class="typing">I am a Student • Web Developer • Creator</p>
 
     <button class="btn" onclick="document.getElementById('about').scrollIntoView()">
         Explore
